@@ -4,7 +4,6 @@ import System.Directory (doesFileExist)
 import System.Process (callCommand)
 import Control.Monad (forM_)
 import Data.List (stripPrefix, isInfixOf)
-import Data.Maybe (fromMaybe)
 
 type Target = String
 type Dependency = String
