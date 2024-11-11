@@ -16,7 +16,7 @@ To install Cinder, you’ll need to have GHC (Glasgow Haskell Compiler) installe
 After installing GHC, follow these steps:
 1. Clone the Cinder repository:
 ```bash
-git clone https://github.com/yourusername/cinder.git
+git clone https://github.com/obsidian-language/cinder.git
 ```
 2. Navigate to the project directory:
 ```bash
