@@ -2,12 +2,16 @@ module Main where
 
 import System.Directory (doesFileExist)
 import System.Process (callCommand)
-import Control.Monad (forM_)
+import Control.Monad (forM_, filterM)
 import Data.List (stripPrefix, isInfixOf)
+import System.Environment (getArgs)
 
 type Target = String
 type Dependency = String
 type Command = String
+
+version :: String
+version = "0.1.0"
 
 parseLines :: [String] -> [(Target, Dependency, Command)]
 parseLines = aux [] Nothing
@@ -51,10 +55,25 @@ runBuildRule (target, dependency, command) = do
       callCommand finalCommand
       putStrLn $ "Built " <> target
 
+findBuildFile :: IO (Maybe FilePath)
+findBuildFile = do
+  let possibleFiles = ["Cinderfile", "cinderfile", "cinderFile", "CinderFile"]
+  existingFiles <- filterM doesFileExist possibleFiles
+  return $ case existingFiles of
+    (x:_) -> Just x
+    [] -> Nothing
+
 main :: IO ()
 main = do
-  let buildFile = "CinderFile"
-  contents <- readFile buildFile
-  let inputLines = filter (not . null) $ lines contents
-  let rules = parseLines inputLines
-  forM_ rules runBuildRule
+  args <- getArgs
+  if "--version" `elem` args
+    then putStrLn $ "Cinder Build Version: " <> version
+    else do
+      buildFile <- findBuildFile
+      case buildFile of
+        Just file -> do
+          contents <- readFile file
+          let inputLines = filter (not . null) $ lines contents
+          let rules = parseLines inputLines
+          forM_ rules runBuildRule
+        Nothing -> putStrLn "No valid build file (Cinderfile, cinderfile, cinderFile, CinderFile) found."

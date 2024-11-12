@@ -11,7 +11,7 @@ Cinder is a build system designed specifically for the Obsidian programming lang
 
 # Installation
 
-To install Cinder, you’ll need to have GHC (Glasgow Haskell Compiler) installed on your machine. You can download GHC from [here](https://www.haskell.org/ghcup/install/)
+To install Cinder, you'll need to have GHC (Glasgow Haskell Compiler) installed on your machine. You can download GHC from [here](https://www.haskell.org/ghcup/install/)
 
 After installing GHC, follow these steps:
 1. Clone the Cinder repository:
