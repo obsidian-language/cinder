@@ -1,6 +1,6 @@
 # Cinder
 
-Cinder is a build system designed specifically for the Obsidian programming language. Written in Haskell, Cinder provides a simple, efficient way to automate the building and compilation of Obsidian projects. Its syntax follows a familiar Makefile-style format, making it easy to define tasks, dependencies, and execution flows.
+Cinder is a build system designed specifically for the Obsidian programming language. Written in C, Cinder provides a simple, efficient way to automate the building and compilation of Obsidian projects. Its syntax follows a familiar Makefile-style format, making it easy to define tasks, dependencies, and execution flows.
 
 # Features
 
@@ -11,7 +11,7 @@ Cinder is a build system designed specifically for the Obsidian programming lang
 
 # Installation
 
-To install Cinder, you'll need to have GHC (Glasgow Haskell Compiler) installed on your machine. You can download GHC from [here](https://www.haskell.org/ghcup/install/)
+To install Cinder, you'll need to have Clang installed on your machine. You can download Clang from [here](https://clang.llvm.org/)
 
 After installing GHC, follow these steps:
 1. Clone the Cinder repository:
@@ -24,7 +24,7 @@ cd cinder
 ```
 3. Build and install Cinder:
 ```bash
-cabal install
+make
 ```
 4. Add the Cinder binary to your system path (optional but recommended):
 ```bash
