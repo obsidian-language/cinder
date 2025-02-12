@@ -13,7 +13,7 @@ Cinder is a build system designed specifically for the Obsidian programming lang
 
 To install Cinder, you'll need to have Clang installed on your machine. You can download Clang from [here](https://clang.llvm.org/)
 
-After installing GHC, follow these steps:
+After installing Clang, follow these steps:
 1. Clone the Cinder repository:
 ```bash
 git clone https://github.com/obsidian-language/cinder.git
@@ -36,7 +36,7 @@ To use Cinder for your Obsidian project, create a cinderfile in the root directo
 
 ## Basic Example:
 ```
-helloWorld: main.ob
+helloWorld:main.ob
     obsidian @$ -o $!
 ```
 

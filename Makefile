@@ -1,26 +1,40 @@
 CC = clang
-CFLAGS = -Wall -Wextra -O2
-SRC = src/main.c
-OBJ = $(SRC:.c=.o)
+CFLAGS = -Wall -Wextra -Werror -Wpedantic -std=c17
 
-OS := $(shell uname -s)
-ifeq ($(OS), Linux)
-    TARGET = cinder
-    LDFLAGS = -lpthread
-else ifeq ($(OS), Darwin)
-    TARGET = cinder
-    LDFLAGS = -lpthread
-else
-    TARGET = cinder.exe
-    LDFLAGS = -static -D_WIN32
-endif
+SRC_DIR = src
+BIN_DIR = bin
+OBJ_DIR = obj
+
+SRC = $(wildcard $(SRC_DIR)/*.c)
+OBJ = $(patsubst $(SRC_DIR)/%.c, $(OBJ_DIR)/%.o, $(SRC))
+TARGET = $(BIN_DIR)/cinder
 
 all: $(TARGET)
 
 $(TARGET): $(OBJ)
+	@mkdir -p $(BIN_DIR)
 	$(CC) $(CFLAGS) -o $@ $^ $(LDFLAGS)
 
-clean:
-	rm -f $(TARGET) $(OBJ)
+$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c | $(OBJ_DIR)
+	$(CC) $(CFLAGS) -c $< -o $@
 
-.PHONY: all clean
+$(OBJ_DIR):
+	@mkdir -p $(OBJ_DIR)
+
+DEP = $(OBJ:.o=.d)
+-include $(DEP)
+
+$(OBJ_DIR)/%.d: $(SRC_DIR)/%.c | $(OBJ_DIR)
+	$(CC) $(CFLAGS) -MM $< -MF $@
+
+clean:
+	@rm -rf $(OBJ_DIR) $(BIN_DIR)
+
+run: $(TARGET)
+	./$(TARGET)
+
+install: $(TARGET)
+	install -d /usr/local/bin
+	install -m 755 $(TARGET) /usr/local/bin/
+
+.PHONY: all clean run
