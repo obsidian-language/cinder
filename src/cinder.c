@@ -1,32 +1,10 @@
+#include <stddef.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <stdbool.h>
 #include <errno.h>
-#ifdef _WIN32
-#include <windows.h>
-#define THREAD HANDLE
-#define THREAD_FUNC DWORD WINAPI
-#define THREAD_CREATE(tid, func, arg) (*(tid) = CreateThread(NULL, 0, func, arg, 0, NULL), *(tid) ? 0 : -1)
-#define THREAD_JOIN(tid) (WaitForSingleObject(tid, INFINITE) == WAIT_FAILED ? -1 : 0)
-#else
-#include <unistd.h>
-#include <pthread.h>
-#define THREAD pthread_t
-#define THREAD_FUNC void *
-#define THREAD_CREATE(tid, func, arg) pthread_create(tid, NULL, func, arg)
-#define THREAD_JOIN(tid) pthread_join(tid, NULL)
-#endif
-
-#define VERSION "0.0.1"
-#define MAX_LINE 1024
-#define MAX_RULES 100
-
-typedef struct {
-    char target[MAX_LINE];
-    char dependency[MAX_LINE];
-    char command[MAX_LINE];
-} Rule;
+#include "include/cinder.h"
 
 Rule rules[MAX_RULES];
 int ruleCount = 0;
@@ -86,7 +64,7 @@ THREAD_FUNC runBuildRule(void *arg) {
 bool parseRule(const char *line, char *target, char *dependency) {
     const char *colon = strchr(line, ':');
     if (!colon) return false;
-    strncpy(target, line, colon - line);
+    strncpy(target, line, (size_t)(colon - line));
     target[colon - line] = '\0';
     strcpy(dependency, colon + 1);
     return true;

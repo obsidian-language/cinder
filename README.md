@@ -11,7 +11,7 @@ Cinder is a build system designed specifically for the Obsidian programming lang
 
 # Installation
 
-To install Cinder, you'll need to have Clang installed on your machine. You can download Clang from [here](https://clang.llvm.org/)
+To build Cinder, you'll need to have GCC and CMake installed on your machine. 
 
 After installing Clang, follow these steps:
 1. Clone the Cinder repository:
@@ -24,7 +24,7 @@ cd cinder
 ```
 3. Build and install Cinder:
 ```bash
-make
+cmake -B build -S .
 ```
 4. Add the Cinder binary to your system path (optional but recommended):
 ```bash
