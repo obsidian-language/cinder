@@ -24,7 +24,7 @@ cd cinder
 ```
 3. Build and install Cinder:
 ```bash
-cmake -B build -S .
+make
 ```
 4. Add the Cinder binary to your system path (optional but recommended):
 ```bash
